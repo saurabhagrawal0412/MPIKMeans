@@ -1,0 +1,15 @@
+cd $HARP_ROOT_DIR
+
+mvn clean package
+
+cd $HARP_ROOT_DIR/harp-tutorial-app
+
+cp target/harp-tutorial-app-1.0-SNAPSHOT.jar $HADOOP_HOME
+
+cd $HADOOP_HOME
+
+hadoop jar harp-tutorial-app-1.0-SNAPSHOT.jar edu.iu.kmeans.common.MiniBatchKmeansMapCollective 1000 10 10 100 2 10 /minibatch /tmp/minibatch
+
+hadoop fs -copyToLocal /minibatch/centroids/* /home/cc/Documents
+
+vi /home/cc/Documents/centroids_0
